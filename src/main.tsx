@@ -1,10 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App.tsx';
+import Devices from './views/Devices';
 import './index.css';
+import FetchDevices from './context/FetchDevices';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <App />
+    <FetchDevices>
+      <Devices />
+    </FetchDevices>
   </React.StrictMode>
 );
