@@ -10,10 +10,6 @@ export default function Devices() {
     return;
   }
 
-  if (loading) {
-    return;
-  }
-
   return (
     <>
       <Header />
