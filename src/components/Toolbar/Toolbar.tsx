@@ -1,15 +1,10 @@
-import { Device } from '../../types/devices';
 import Filters from './Filters';
 import Search from './Search';
 
-interface ToolbarSearchProps {
-  onSearch: (data: Device[]) => void;
-}
-
-export default function Toolbar({ onSearch }: ToolbarSearchProps) {
+export default function Toolbar() {
   return (
     <div>
-      <Search onSearchHandle={onSearch} />
+      <Search />
       <Filters />
     </div>
   );
