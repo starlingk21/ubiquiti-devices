@@ -43,4 +43,5 @@ export interface FetchedData {
   data: Device[];
   loading: boolean;
   error: undefined | TypeError;
+  setData: (devices: Device[]) => void;
 }

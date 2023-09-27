@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect } from 'react';
 import { Device, ApiResponse, FetchedData } from '../types/devices';
 
 const URL = 'https://static.ui.com/fingerprint/ui/public.json';
@@ -7,6 +7,7 @@ const initialContext: FetchedData = {
   data: [],
   loading: false,
   error: undefined,
+  setData: (devices) => [],
 };
 
 export const DevicesContext = createContext<FetchedData>(initialContext);
@@ -38,6 +39,7 @@ export default function FetchDevices({ children }: React.PropsWithChildren) {
         data,
         loading,
         error,
+        setData,
       }}
     >
       {children}
