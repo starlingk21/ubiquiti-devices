@@ -1,19 +1,36 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { DevicesContext } from '../context/FetchDevices';
-import Header from '../components/DevicesUtility/Header';
 import DevicesList from '../components/Devices/DevicesList';
+import Toolbar from '../components/Toolbar/Toolbar';
 
 export default function Devices() {
-  const { loading, data, error } = useContext(DevicesContext);
+  const { loading, data, error, deviceFilters } = useContext(DevicesContext);
+  const [searchWord, setSearchWord] = useState('');
 
-  if (!data) {
-    return;
-  }
+  const handleSearch = (word: string) => {
+    setSearchWord(word);
+  };
+
+  const filterBySearchWord = data.filter((device) => {
+    return (
+      device.id.toLowerCase().includes(searchWord.toLowerCase()) ||
+      device.product.name.toLowerCase().includes(searchWord.toLowerCase()) ||
+      device.line.name.toLowerCase().includes(searchWord.toLowerCase()) ||
+      device.shortnames.some((element) =>
+        element.toLowerCase().includes(searchWord.toLowerCase())
+      )
+    );
+  });
 
   return (
     <>
-      <Header />
-      <DevicesList loading={loading} data={data} error={error} />
+      <Toolbar handleSearch={handleSearch} />
+      <DevicesList
+        loading={loading}
+        data={filterBySearchWord}
+        error={error}
+        deviceFilters={deviceFilters}
+      />
     </>
   );
 }

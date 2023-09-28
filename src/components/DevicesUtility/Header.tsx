@@ -8,7 +8,7 @@ export default function Header() {
           className='bg-u-logo transition ease-in-out delay-150 hover:transition-all hover:bg-hover-logo w-14 h-14'
           to='/'
         />
-        <div className='text-xl text-header-title ml-3.5'>Devices</div>
+        <div className='text-xl text-general-gray ml-3.5'>Devices</div>
       </div>
       <div>
         <span className='text-sm pr-7'>Kristaps Strazds</span>
