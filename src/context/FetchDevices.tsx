@@ -1,5 +1,10 @@
-import React, { createContext, useState, useEffect } from 'react';
-import { Device, ApiResponse, FetchedData } from '../types/devices';
+import { createContext, useState, useEffect, PropsWithChildren } from 'react';
+import {
+  Device,
+  ApiResponse,
+  FetchedData,
+  filtersArray,
+} from '../types/devices';
 
 const URL = 'https://static.ui.com/fingerprint/ui/public.json';
 
@@ -7,15 +12,16 @@ const initialContext: FetchedData = {
   data: [],
   loading: false,
   error: undefined,
-  setData: (devices) => [],
+  deviceFilters: [],
 };
 
 export const DevicesContext = createContext<FetchedData>(initialContext);
 
-export default function FetchDevices({ children }: React.PropsWithChildren) {
+export default function FetchDevices({ children }: PropsWithChildren) {
   const [data, setData] = useState<Device[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<TypeError>();
+  const [deviceFilters, setFilters] = useState<filtersArray[]>([]);
 
   useEffect(() => {
     if (loading) return;
@@ -26,8 +32,22 @@ export default function FetchDevices({ children }: React.PropsWithChildren) {
       .then((response) => response.json())
       .then((resData: ApiResponse) => {
         const { devices } = resData;
+        const devicesObj: Record<string, boolean> = {};
+        const filters: filtersArray[] = [];
 
         setData(devices);
+
+        devices.forEach((i) => {
+          // Check if line id exists for looped device
+          if (Object.hasOwnProperty.apply(devicesObj, [i.line.id])) {
+            return;
+          }
+
+          devicesObj[i.line.id] = true;
+          filters.push(i.line);
+        });
+
+        setFilters(filters);
       })
       .catch(setError)
       .finally(() => setLoading(false));
@@ -39,7 +59,7 @@ export default function FetchDevices({ children }: React.PropsWithChildren) {
         data,
         loading,
         error,
-        setData,
+        deviceFilters,
       }}
     >
       {children}

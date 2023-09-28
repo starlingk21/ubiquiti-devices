@@ -43,5 +43,14 @@ export interface FetchedData {
   data: Device[];
   loading: boolean;
   error: undefined | TypeError;
-  setData: (devices: Device[]) => void;
+  deviceFilters: filtersArray[];
+}
+
+export interface searchWord {
+  handleSearch: (text: string) => void;
+}
+
+export interface filtersArray {
+  id: string;
+  name: string;
 }
