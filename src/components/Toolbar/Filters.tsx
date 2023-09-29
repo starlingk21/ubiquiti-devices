@@ -1,6 +1,6 @@
-import { useContext, useState } from 'react';
+import { useContext, useState, ChangeEvent } from 'react';
 import { DevicesContext } from '../../context/FetchDevices';
-import { filtersArray, gridView } from '../../types/devices';
+import { gridView } from '../../types/devices';
 
 //icons for view type
 import iconList from '../../assets/icons/icon-list.svg';
@@ -8,27 +8,35 @@ import iconListActive from '../../assets/icons/icon-listactive.svg';
 import iconGrid from '../../assets/icons/icon-grid.svg';
 import iconGridActive from '../../assets/icons/icon-grid-active.svg';
 
-export default function Filters({ isGrid }: gridView) {
+export default function Filters({ isGrid, checkedFilters }: gridView) {
   const { deviceFilters } = useContext(DevicesContext);
 
   const [showFilters, setShowFilters] = useState(false);
   const [listView, setListView] = useState(true);
   const [gridView, setGridView] = useState(false);
+  const [selectedFilters, setSelectedFilters] = useState<object>({});
 
-  const filters = deviceFilters.map((item: filtersArray) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setSelectedFilters((curr) => ({
+      ...curr,
+      [e.target.id]: e.target.checked,
+    }));
+  };
+
+  const filters = deviceFilters.map((filter) => {
     return (
-      <div className='filter mb-1' key={item.id}>
+      <div className='filter mb-1' key={filter.id}>
         <input
           className='cursor-pointer'
           type='checkbox'
-          id={item.id}
-          onChange={(event) => console.log(event.target.id)}
+          id={filter.id}
+          onChange={handleChange}
         />
         <label
           className='p-3 cursor-pointer text-sm leading-6'
-          htmlFor={item.id}
+          htmlFor={filter.id}
         >
-          {item.name}
+          {filter.name}
         </label>
       </div>
     );
@@ -48,6 +56,8 @@ export default function Filters({ isGrid }: gridView) {
 
     isGrid(false);
   };
+
+  checkedFilters(selectedFilters);
 
   return (
     <div className='filters flex'>
