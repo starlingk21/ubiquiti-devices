@@ -1,10 +1,8 @@
-import { useState, ChangeEvent, KeyboardEvent, useRef } from 'react';
+import { useState, ChangeEvent, KeyboardEvent } from 'react';
 import { searchWord } from '../../types/devices';
 
 export default function Search({ handleSearch }: searchWord) {
   const [search, setSearch] = useState('');
-
-  const searchRef = useRef(null);
 
   const onChangeSearchHandler = (event: ChangeEvent<HTMLInputElement>) => {
     setSearch(event.target.value);
@@ -21,12 +19,6 @@ export default function Search({ handleSearch }: searchWord) {
     }
   };
 
-  // const clearSearch = () => {
-  //   searchRef.current = '';
-  //   setSearch('');
-  //   handleSearch('');
-  // };
-
   return (
     <>
       <div className='relative pl-6'>
@@ -40,7 +32,6 @@ export default function Search({ handleSearch }: searchWord) {
         <input
           className='block w-full min-w-344-px outline-none p-5px pl-8 text-sm caret-caret-blue text-gray-900 rounded-md bg-header-c focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
           type='search'
-          ref={searchRef}
           role='search'
           onKeyDown={handleSearchOnEnter}
           onChange={onChangeSearchHandler}

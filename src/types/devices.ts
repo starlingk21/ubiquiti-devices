@@ -49,13 +49,16 @@ export interface FetchedData {
 export interface searchWord {
   handleSearch: (text: string) => void;
   isGrid: (view: boolean) => void;
+  checkedFilters: (filter: object) => void;
 }
 
 export interface filtersArray {
   id: string;
   name: string;
+  checked?: boolean;
 }
 
 export interface gridView {
   isGrid: (view: boolean) => void;
+  checkedFilters: (filter: object) => void;
 }
