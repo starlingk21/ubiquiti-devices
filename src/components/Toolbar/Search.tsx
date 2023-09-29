@@ -8,6 +8,7 @@ export default function Search({ handleSearch }: searchWord) {
 
   const onChangeSearchHandler = (event: ChangeEvent<HTMLInputElement>) => {
     setSearch(event.target.value);
+    console.log(event);
   };
 
   const handleSearchOnEnter = (event: KeyboardEvent<HTMLInputElement>) => {

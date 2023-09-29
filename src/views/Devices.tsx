@@ -1,11 +1,17 @@
 import { useContext, useState } from 'react';
 import { DevicesContext } from '../context/FetchDevices';
 import DevicesList from '../components/Devices/DevicesList';
+import DevicesGrid from '../components/Devices/DevicesGrid';
 import Toolbar from '../components/Toolbar/Toolbar';
 
 export default function Devices() {
   const { loading, data, error, deviceFilters } = useContext(DevicesContext);
   const [searchWord, setSearchWord] = useState('');
+  const [gridView, setGridView] = useState(true);
+
+  const handleCurrentView = (type: boolean) => {
+    setGridView(type);
+  };
 
   const handleSearch = (word: string) => {
     setSearchWord(word);
@@ -24,13 +30,22 @@ export default function Devices() {
 
   return (
     <>
-      <Toolbar handleSearch={handleSearch} />
-      <DevicesList
-        loading={loading}
-        data={filterBySearchWord}
-        error={error}
-        deviceFilters={deviceFilters}
-      />
+      <Toolbar handleSearch={handleSearch} isGrid={handleCurrentView} />
+      {!gridView ? (
+        <DevicesGrid
+          loading={loading}
+          data={filterBySearchWord}
+          error={error}
+          deviceFilters={deviceFilters}
+        />
+      ) : (
+        <DevicesList
+          loading={loading}
+          data={filterBySearchWord}
+          error={error}
+          deviceFilters={deviceFilters}
+        />
+      )}
     </>
   );
 }
