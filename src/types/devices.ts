@@ -16,7 +16,7 @@ export interface Device {
   };
   icon: {
     id: string;
-    resolutions: [number, number];
+    resolutions: [][];
   };
   unifi: {
     adoptability: string;
@@ -48,9 +48,14 @@ export interface FetchedData {
 
 export interface searchWord {
   handleSearch: (text: string) => void;
+  isGrid: (view: boolean) => void;
 }
 
 export interface filtersArray {
   id: string;
   name: string;
+}
+
+export interface gridView {
+  isGrid: (view: boolean) => void;
 }

@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react';
 import { DevicesContext } from '../../context/FetchDevices';
-import { filtersArray } from '../../types/devices';
+import { filtersArray, gridView } from '../../types/devices';
 
 //icons for view type
 import iconList from '../../assets/icons/icon-list.svg';
@@ -8,7 +8,7 @@ import iconListActive from '../../assets/icons/icon-listactive.svg';
 import iconGrid from '../../assets/icons/icon-grid.svg';
 import iconGridActive from '../../assets/icons/icon-grid-active.svg';
 
-export default function Filters() {
+export default function Filters({ isGrid }: gridView) {
   const { deviceFilters } = useContext(DevicesContext);
 
   const [showFilters, setShowFilters] = useState(false);
@@ -18,7 +18,12 @@ export default function Filters() {
   const filters = deviceFilters.map((item: filtersArray) => {
     return (
       <div className='filter mb-1' key={item.id}>
-        <input className='cursor-pointer' type='checkbox' id={item.id} />
+        <input
+          className='cursor-pointer'
+          type='checkbox'
+          id={item.id}
+          onChange={(event) => console.log(event.target.id)}
+        />
         <label
           className='p-3 cursor-pointer text-sm leading-6'
           htmlFor={item.id}
@@ -32,12 +37,16 @@ export default function Filters() {
   const toggleListView = () => {
     setListView(true);
     setGridView(false);
+
+    isGrid(true);
   };
 
   const toggleGridView = () => {
     setGridView(true);
 
     listView ? setListView(false) : setGridView(true);
+
+    isGrid(false);
   };
 
   return (
