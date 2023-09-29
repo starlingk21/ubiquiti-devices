@@ -29,6 +29,8 @@ export default function Devices() {
     ) {
       return data;
     }
+
+    device;
   });
 
   const filterBySearchWord = filterDevices.filter((device) => {
